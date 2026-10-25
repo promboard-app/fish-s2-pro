@@ -1,0 +1,325 @@
+{
+  "schema": 1,
+  "id": "promboard.fish-s2-pro",
+  "version": "1.0.0",
+  "name": "S2 Pro 목소리 — Fish Audio 모델 · 감정 태그 · 복제",
+  "description": "글을 읽어 목소리 WAV(44.1kHz)를 만든다. 글 안에 [whisper] · [laughing] 같은 자유 태그로 감정 · 말투를 바꾸고, 화자마다 참조 목소리(+ 그 대사)를 이으면 그 목소리로 복제한다(화자 최대 4명). Fish Audio 의 오픈 모델 S2 Pro(11GB)를 공식 fish-speech 코드로 돌린다. 한국어 포함 83개 언어(카드 목록). 비상업 · 연구 전용(Fish Audio Research License). 실측하지 않은 미검증 플러그인이다. Built with Fish Audio.",
+  "author": "PromBoard",
+  "license": "Apache-2.0 AND LicenseRef-Fish-Audio-Community-1.0",
+  "nonCommercial": true,
+  "licenseNotice": {
+    "conditions": "모델(S2 Pro)은 Fish Audio Research License — 연구 · 비상업 사용만 무료이고 상업 사용은 Fish Audio 와 따로 계약한다. 담아 온 fish-speech 코드는 Fish Audio Community License v1.0(연 매출 50만 달러 미만 상업 가능, 호스팅 서비스는 별도 계약). 동의 없이 실존 인물 목소리를 흉내 내지 않는다. 결과물로 다른 음성 모델을 학습 · 증류하지 않는다. Built with Fish Audio — 공개할 때 표기한다.",
+    "url": "https://huggingface.co/fishaudio/s2-pro/blob/1de9996b6be38b745688de084d87a5633f714e4e/LICENSE.md"
+  },
+  "app": ">=1.0.3",
+  "categories": [
+    "voice"
+  ],
+  "languages": [
+    "zh",
+    "en",
+    "ja",
+    "ko",
+    "es",
+    "pt",
+    "ar",
+    "ru",
+    "fr",
+    "de",
+    "sv",
+    "it",
+    "tr",
+    "no",
+    "nl",
+    "cy",
+    "eu",
+    "ca",
+    "da",
+    "gl",
+    "ta",
+    "hu",
+    "fi",
+    "pl",
+    "et",
+    "hi",
+    "la",
+    "ur",
+    "th",
+    "vi",
+    "jw",
+    "bn",
+    "yo",
+    "sl",
+    "cs",
+    "sw",
+    "nn",
+    "he",
+    "ms",
+    "uk",
+    "id",
+    "kk",
+    "bg",
+    "lv",
+    "my",
+    "tl",
+    "sk",
+    "ne",
+    "fa",
+    "af",
+    "el",
+    "bo",
+    "hr",
+    "ro",
+    "sn",
+    "mi",
+    "yi",
+    "am",
+    "be",
+    "km",
+    "is",
+    "az",
+    "sd",
+    "br",
+    "sq",
+    "ps",
+    "mn",
+    "ht",
+    "ml",
+    "sr",
+    "sa",
+    "te",
+    "ka",
+    "bs",
+    "pa",
+    "lt",
+    "kn",
+    "si",
+    "hy",
+    "mr",
+    "as",
+    "gu",
+    "fo"
+  ],
+  "unverified": true,
+  "repository": "https://github.com/promboard-app/fish-s2-pro",
+  "icon": "icon.png",
+  "contents": [
+    "nodes"
+  ],
+  "python": {
+    "version": "3.12",
+    "torch": "host",
+    "lock": {
+      "win": "nodes/requirements-win.txt",
+      "linux": "nodes/requirements-linux.txt",
+      "mac": "nodes/requirements-mac.txt"
+    },
+    "entry": "nodes.main"
+  },
+  "gpu": {
+    "vramMinMb": 12288,
+    "cpuAllowed": false
+  },
+  "permissions": {},
+  "nodes": [
+    {
+      "id": "fish-s2-pro",
+      "label": "S2 Pro 목소리",
+      "description": "글을 이으면 WAV(44.1kHz)를 낸다. 여러 명이면 줄마다 'Speaker 1: 글'처럼 화자(1~4)를 적는다. 화자 N 참조 목소리(10~30초 말소리)와 그 대사를 함께 이으면 그 화자를 그 목소리로 읽고, 잇지 않으면 모델이 목소리를 고른다. 글 안의 [whisper] · [laughing] 같은 태그로 말투를 바꾼다.",
+      "inputs": [
+        {
+          "id": "text",
+          "type": "text",
+          "label": "읽을 글 (Speaker 1: …)",
+          "required": true
+        },
+        {
+          "id": "voice-1",
+          "type": "audio",
+          "label": "화자 1 참조 목소리",
+          "required": false
+        },
+        {
+          "id": "voice-2",
+          "type": "audio",
+          "label": "화자 2 참조 목소리",
+          "required": false
+        },
+        {
+          "id": "voice-3",
+          "type": "audio",
+          "label": "화자 3 참조 목소리",
+          "required": false
+        },
+        {
+          "id": "voice-4",
+          "type": "audio",
+          "label": "화자 4 참조 목소리",
+          "required": false
+        },
+        {
+          "id": "voice-1-text",
+          "type": "text",
+          "label": "화자 1 참조 대사",
+          "required": false
+        },
+        {
+          "id": "voice-2-text",
+          "type": "text",
+          "label": "화자 2 참조 대사",
+          "required": false
+        },
+        {
+          "id": "voice-3-text",
+          "type": "text",
+          "label": "화자 3 참조 대사",
+          "required": false
+        },
+        {
+          "id": "voice-4-text",
+          "type": "text",
+          "label": "화자 4 참조 대사",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "id": "audio",
+          "type": "audio",
+          "label": "목소리"
+        }
+      ],
+      "settings": [
+        {
+          "id": "context",
+          "label": "문맥 길이",
+          "help": "한 번에 다룰 수 있는 글 · 참조 · 만든 소리의 총량. 길수록 긴 글을 읽지만 그래픽카드 메모리를 더 쓴다. 공식 설정값은 32,768.",
+          "type": "select",
+          "default": "8192",
+          "options": [
+            {
+              "value": "4096",
+              "label": "4,096 · 소리 약 1분 30초"
+            },
+            {
+              "value": "8192",
+              "label": "8,192 · 소리 약 4분 40초"
+            },
+            {
+              "value": "16384",
+              "label": "16,384 · 소리 약 11분"
+            },
+            {
+              "value": "32768",
+              "label": "32,768 · 공식 설정 · 소리 약 23분"
+            }
+          ]
+        },
+        {
+          "id": "chunk",
+          "label": "묶음 크기 (바이트)",
+          "help": "화자 표시 단위로 글을 이 크기 안에서 묶어 차례로 만든다. 공식 기본값 200, 공식 범위 100~1000.",
+          "type": "integer",
+          "default": 200,
+          "min": 100,
+          "max": 1000
+        },
+        {
+          "id": "max_tokens",
+          "label": "묶음당 최대 소리 토큰",
+          "help": "묶음 하나에서 만들 소리의 상한(토큰 21.5개 = 1초). 공식 기본값 1024(약 48초).",
+          "type": "integer",
+          "default": 1024,
+          "min": 64,
+          "max": 4096
+        },
+        {
+          "id": "temperature",
+          "label": "다양성 (temperature)",
+          "help": "클수록 말투가 다양해지고 작을수록 안정적이다. 공식 기본값 0.7, 공식 범위 0.1~1.",
+          "type": "number",
+          "default": 0.7,
+          "min": 0.1,
+          "max": 1,
+          "step": 0.05
+        },
+        {
+          "id": "top_p",
+          "label": "후보 범위 (top_p)",
+          "help": "다음 소리를 고를 때 볼 후보의 누적 확률. 공식 기본값 0.7, 공식 범위 0.1~1.",
+          "type": "number",
+          "default": 0.7,
+          "min": 0.1,
+          "max": 1,
+          "step": 0.05
+        },
+        {
+          "id": "seed",
+          "label": "시드",
+          "help": "같은 시드 · 같은 입력이면 비슷한 결과가 나온다.",
+          "type": "integer",
+          "default": 42,
+          "min": 0,
+          "max": 2147483647
+        }
+      ]
+    }
+  ],
+  "requires": {
+    "models": [
+      {
+        "source": "huggingface",
+        "repo": "fishaudio/s2-pro",
+        "revision": "1de9996b6be38b745688de084d87a5633f714e4e",
+        "license": "LicenseRef-Fish-Audio-Research-License",
+        "files": [
+          {
+            "path": "chat_template.jinja",
+            "bytes": 4116,
+            "sha256": "87a2728cb8dc9fe424d624542f6060ec05a1d285ebbec578bb078900e33396b5"
+          },
+          {
+            "path": "codec.pth",
+            "bytes": 1871099728,
+            "sha256": "74fc41c5a7151c6f350af8bd7e5d6e3accfcc7f3dfbfac23afd35af07052bb2f"
+          },
+          {
+            "path": "config.json",
+            "bytes": 1863,
+            "sha256": "261b519a2a9576710fc8533a77297fae007f0e7b3aa28a217f8352b7f32fe993"
+          },
+          {
+            "path": "model-00001-of-00002.safetensors",
+            "bytes": 4986872984,
+            "sha256": "c4218e8ac93be83b35eee30b4f94cb2e9b5ecff40f3e21611438d2f4f8804aad"
+          },
+          {
+            "path": "model-00002-of-00002.safetensors",
+            "bytes": 4136876104,
+            "sha256": "76738d23465deaac431433232c0762908cc99a6eddc3d49f67307d92680827be"
+          },
+          {
+            "path": "model.safetensors.index.json",
+            "bytes": 32686,
+            "sha256": "c8cb9974d3d17663a95dba1d6c3ea531fc42d377c0dff946f3a01a0ec48d45a3"
+          },
+          {
+            "path": "special_tokens_map.json",
+            "bytes": 101864,
+            "sha256": "c2ff18fde6e43b7408435bc8ed079af74531befba549358a97cbc59ce606bc6b"
+          },
+          {
+            "path": "tokenizer.json",
+            "bytes": 12217872,
+            "sha256": "f24e08099d45a8adf3f52f5f0b03276e433bb9d689bb15fcbcc48ce58744588b"
+          },
+          {
+            "path": "tokenizer_config.json",
+            "bytes": 860832,
+            "sha256": "b8d149343ae425b0da67e6708686aceb51be7815d9792f265fc12ff04d5e9856"
+          }
+        ]
+      }
+    ]
+  }
+}

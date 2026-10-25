@@ -1,0 +1,53 @@
+{
+ "title": {
+  "ko": "S2 Pro 목소리 노드가 하는 일 (실측하지 않은 미검증 플러그인)",
+  "en": "What the S2 Pro voice node does (unverified: not run by us)"
+ },
+ "steps": [
+  {
+   "head": {
+    "ko": "입력",
+    "en": "Input"
+   },
+   "body": {
+    "ko": "읽을 글(Speaker 1: … · [whisper] 같은 태그)\n화자마다 참조 목소리 + 그 대사(선택)",
+    "en": "Text to read (Speaker 1: …, tags such as [whisper])\nOptional reference voice + its transcript per speaker"
+   }
+  },
+  {
+   "head": {
+    "ko": "참조 → 소리 토큰",
+    "en": "Reference → tokens"
+   },
+   "body": {
+    "ko": "코덱(codec.pth)이 참조 목소리를 소리 토큰으로 바꾼다(1초 = 21.5개)",
+    "en": "The codec (codec.pth) turns each reference voice into audio tokens (21.5 per second)"
+   }
+  },
+  {
+   "head": {
+    "ko": "S2 Pro 생성",
+    "en": "S2 Pro generates"
+   },
+   "body": {
+    "ko": "화자 표시 단위로 묶은 글을 차례로 읽어 소리 토큰을 만든다. 앞 묶음을 문맥으로 이어 목소리를 유지한다",
+    "en": "Reads the text batch by batch (grouped at speaker tags) and makes audio tokens, carrying earlier batches as context to keep the voices"
+   }
+  },
+  {
+   "head": {
+    "ko": "WAV",
+    "en": "WAV"
+   },
+   "body": {
+    "ko": "코덱이 소리 토큰을 소리로 되돌려 이어 붙인다\n44.1kHz 모노",
+    "en": "The codec turns the tokens back into sound and joins the batches\n44.1 kHz mono"
+   }
+  }
+ ],
+ "footer": {
+  "ko": "공식 fish-speech 코드(main 541566932abb)의 순서 그대로 · 모델 S2 Pro 11.0GB · Built with Fish Audio",
+  "en": "Same order as the official fish-speech code (main 541566932abb) · S2 Pro model 11.0 GB · Built with Fish Audio"
+ },
+ "out": "process.png"
+}
