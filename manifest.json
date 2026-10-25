@@ -3,7 +3,7 @@
   "id": "promboard.fish-s2-pro",
   "version": "1.0.0",
   "name": "S2 Pro 목소리 — Fish Audio 모델 · 감정 태그 · 복제",
-  "description": "글을 읽어 목소리 WAV(44.1kHz)를 만든다. 글 안에 [whisper] · [laughing] 같은 자유 태그로 감정 · 말투를 바꾸고, 화자마다 참조 목소리(+ 그 대사)를 이으면 그 목소리로 복제한다(화자 최대 4명). Fish Audio 의 오픈 모델 S2 Pro(11GB)를 공식 fish-speech 코드로 돌린다. 한국어 포함 83개 언어(카드 목록). 비상업 · 연구 전용(Fish Audio Research License). 실측하지 않은 미검증 플러그인이다. Built with Fish Audio.",
+  "description": "글을 읽어 목소리 WAV(44.1kHz)를 만든다. 글 안에 [whisper] · [laughing] 같은 자유 태그로 감정 · 말투를 바꾸고, 화자마다 참조 목소리(+ 그 대사)를 이으면 그 목소리로 복제한다(대본 화자 최대 4명, 참조 목소리는 3명까지). Fish Audio 의 오픈 모델 S2 Pro(11GB)를 공식 fish-speech 코드로 돌린다. 한국어 포함 83개 언어(카드 목록). 비상업 · 연구 전용(Fish Audio Research License). 실측하지 않은 미검증 플러그인이다. Built with Fish Audio.",
   "author": "PromBoard",
   "license": "Apache-2.0 AND LicenseRef-Fish-Audio-Community-1.0",
   "nonCommercial": true,
@@ -125,7 +125,7 @@
     {
       "id": "fish-s2-pro",
       "label": "S2 Pro 목소리",
-      "description": "글을 이으면 WAV(44.1kHz)를 낸다. 여러 명이면 줄마다 'Speaker 1: 글'처럼 화자(1~4)를 적는다. 화자 N 참조 목소리(10~30초 말소리)와 그 대사를 함께 이으면 그 화자를 그 목소리로 읽고, 잇지 않으면 모델이 목소리를 고른다. 글 안의 [whisper] · [laughing] 같은 태그로 말투를 바꾼다.",
+      "description": "글을 이으면 WAV(44.1kHz)를 낸다. 여러 명이면 줄마다 'Speaker 1: 글'처럼 화자(1~4)를 적는다. 화자 N 참조 목소리(10~30초 말소리, 3명까지)와 그 대사를 함께 이으면 그 화자를 그 목소리로 읽고, 잇지 않으면 모델이 목소리를 고른다. 글 안의 [whisper] · [laughing] 같은 태그로 말투를 바꾼다.",
       "inputs": [
         {
           "id": "text",
@@ -152,12 +152,6 @@
           "required": false
         },
         {
-          "id": "voice-4",
-          "type": "audio",
-          "label": "화자 4 참조 목소리",
-          "required": false
-        },
-        {
           "id": "voice-1-text",
           "type": "text",
           "label": "화자 1 참조 대사",
@@ -173,12 +167,6 @@
           "id": "voice-3-text",
           "type": "text",
           "label": "화자 3 참조 대사",
-          "required": false
-        },
-        {
-          "id": "voice-4-text",
-          "type": "text",
-          "label": "화자 4 참조 대사",
           "required": false
         }
       ],
@@ -225,7 +213,7 @@
           "max": 1000
         },
         {
-          "id": "max_tokens",
+          "id": "max-tokens",
           "label": "묶음당 최대 소리 토큰",
           "help": "묶음 하나에서 만들 소리의 상한(토큰 21.5개 = 1초). 공식 기본값 1024(약 48초).",
           "type": "integer",
@@ -244,7 +232,7 @@
           "step": 0.05
         },
         {
-          "id": "top_p",
+          "id": "top-p",
           "label": "후보 범위 (top_p)",
           "help": "다음 소리를 고를 때 볼 후보의 누적 확률. 공식 기본값 0.7, 공식 범위 0.1~1.",
           "type": "number",

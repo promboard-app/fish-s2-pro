@@ -2,7 +2,7 @@
 
 노드 하나(fish-s2-pro)가 글을 읽어 목소리 WAV(44.1kHz 모노)를 낸다. 참조 목소리(+ 그 대사)를 이으면 그 목소리로 복제하고,
 글 안에 [whisper] · [laughing] · [excited] 같은 자유 태그로 감정 · 말투를 바꾼다. 화자를 나눠 쓰면(Speaker 1: … / Speaker 2: …)
-화자마다 참조 목소리를 따로 이을 수 있다(최대 4명).
+화자마다 참조 목소리를 따로 이을 수 있다(대본 화자 최대 4명, 참조 목소리는 화자 1~3).
 
 공식 코드: fishaudio/fish-speech(main 541566932abb, 2026-10-14)의 fish_speech 패키지를 이 폴더 nodes/fish_speech 에 그대로 담았다
   (Fish Audio Community License v1.0 — LICENSE-fish-audio.md · NOTICE.md). 이 노드는 그 안의 text2semantic.inference(init_model ·
@@ -26,7 +26,7 @@ if _HERE not in sys.path:
     sys.path.insert(0, _HERE)  # 담아 온 fish_speech 패키지를 그 이름 그대로 불러온다(공식 코드가 절대 경로로 import 한다)
 
 MODEL_FILE = "fishaudio/s2-pro/config.json"
-MAX_SPEAKERS = 4
+MAX_REF_VOICES = 3  # 참조 목소리를 받는 화자 수(노드 입력 칸 상한 8 — 글 1 + 소리 3 + 대사 3)
 MAX_TEXT_CHARS = 4000  # 문맥 8,192 토큰(약 4분 40초 소리)에 들어가고 앱이 노드 한 번에 주는 시간 안에 끝나게
 MAX_REF_SEC = 60.0
 SPEAKER_RE = re.compile(r"^\s*(?:speaker\s*)?([1-4])\s*[:：]\s*(.*)$", re.IGNORECASE)
@@ -139,7 +139,7 @@ def fish_s2_pro(ctx, inputs, settings):
     script = to_official_script(text)
 
     refs = []
-    for n in range(1, MAX_SPEAKERS + 1):
+    for n in range(1, MAX_REF_VOICES + 1):
         path = inputs.get(f"voice-{n}")
         if not path:
             continue
@@ -175,8 +175,8 @@ def fish_s2_pro(ctx, inputs, settings):
             device=device,
             decode_one_token=decode,
             text=script,
-            max_new_tokens=int(settings["max_tokens"]),
-            top_p=float(settings["top_p"]),
+            max_new_tokens=int(settings["max-tokens"]),
+            top_p=float(settings["top-p"]),
             temperature=float(settings["temperature"]),
             compile=False,
             iterative_prompt=True,

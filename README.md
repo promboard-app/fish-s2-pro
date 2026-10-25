@@ -2,7 +2,7 @@
 
 [English](#english)
 
-글을 읽어 목소리(WAV)를 만드는 PromBoard 커뮤니티 플러그인입니다. Fish Audio 의 오픈 모델 [S2 Pro](https://huggingface.co/fishaudio/s2-pro)를 공식 [fish-speech](https://github.com/fishaudio/fish-speech) 코드로 이 PC 에서 돌립니다. 글 안에 `[whisper]` · `[laughing]` · `[excited]` 같은 자유 태그로 감정 · 말투를 바꾸고, 화자마다 참조 목소리와 그 대사를 이으면 그 목소리로 읽습니다(화자 최대 4명). **실측하지 않은 미검증 플러그인입니다** — 받아 돌려 보지 않았고, 아래 그래픽카드 메모리는 계산값입니다. 모델은 비상업 · 연구 전용입니다.
+글을 읽어 목소리(WAV)를 만드는 PromBoard 커뮤니티 플러그인입니다. Fish Audio 의 오픈 모델 [S2 Pro](https://huggingface.co/fishaudio/s2-pro)를 공식 [fish-speech](https://github.com/fishaudio/fish-speech) 코드로 이 PC 에서 돌립니다. 글 안에 `[whisper]` · `[laughing]` · `[excited]` 같은 자유 태그로 감정 · 말투를 바꾸고, 화자마다 참조 목소리와 그 대사를 이으면 그 목소리로 읽습니다(대본 화자 최대 4명, 참조 목소리는 3명까지). **실측하지 않은 미검증 플러그인입니다** — 받아 돌려 보지 않았고, 아래 그래픽카드 메모리는 계산값입니다. 모델은 비상업 · 연구 전용입니다.
 
 **Built with Fish Audio.** Fish Audio 가 만들거나 보증한 플러그인이 아닙니다.
 
@@ -31,7 +31,7 @@
 노드 추가 목록에서 「S2 Pro 목소리」를 놓고 글 노드를 '읽을 글'에 이은 뒤 ▷ 를 누릅니다. 한 번에 4,000자까지 받습니다.
 
 - 여러 명이면 줄마다 `Speaker 1: 글` ~ `Speaker 4: 글`(또는 `1: 글`)처럼 적습니다. 공식 표기 `<|speaker:0|>` 를 써도 됩니다. 화자 표시가 없으면 화자 1 이 읽습니다.
-- '화자 N 참조 목소리'에 말소리(10~30초가 좋고 60초까지)를, '화자 N 참조 대사'에 그 소리의 대사를 함께 이으면 그 화자를 그 목소리로 읽습니다. 대사 없이 소리만 이으면 오류로 알려 줍니다. 실존 인물의 목소리는 그 사람의 동의 없이 쓰지 않습니다.
+- '화자 N 참조 목소리'(N = 1~3)에 말소리(10~30초가 좋고 60초까지)를, '화자 N 참조 대사'에 그 소리의 대사를 함께 이으면 그 화자를 그 목소리로 읽습니다. 대사 없이 소리만 이으면 오류로 알려 줍니다. 실존 인물의 목소리는 그 사람의 동의 없이 쓰지 않습니다.
 
 | 설정 | 기본값 | 뜻 |
 |---|---|---|
@@ -85,7 +85,7 @@ docs/                         이 README 의 그림(ko · en)과 그 스크립�
 
 ## English
 
-**S2 Pro voice — Fish Audio model, emotion tags, cloning** is a PromBoard community plugin that reads text into a voice (WAV) with Fish Audio's open [S2 Pro](https://huggingface.co/fishaudio/s2-pro) model and the official [fish-speech](https://github.com/fishaudio/fish-speech) code, running on this PC. Free-form tags in the text such as `[whisper]`, `[laughing]` or `[excited]` change emotion and delivery, and a reference voice plus its transcript per speaker clones that voice (up to 4 speakers). **This plugin is unverified: we have not downloaded and run it**, and the GPU memory below is a calculation. The model is for non-commercial and research use only.
+**S2 Pro voice — Fish Audio model, emotion tags, cloning** is a PromBoard community plugin that reads text into a voice (WAV) with Fish Audio's open [S2 Pro](https://huggingface.co/fishaudio/s2-pro) model and the official [fish-speech](https://github.com/fishaudio/fish-speech) code, running on this PC. Free-form tags in the text such as `[whisper]`, `[laughing]` or `[excited]` change emotion and delivery, and a reference voice plus its transcript per speaker clones that voice (up to 4 speakers in the script, reference voices for up to 3). **This plugin is unverified: we have not downloaded and run it**, and the GPU memory below is a calculation. The model is for non-commercial and research use only.
 
 **Built with Fish Audio.** This plugin is not made or endorsed by Fish Audio.
 
@@ -114,7 +114,7 @@ Calculated, not measured: about 8.5 GB of bf16 weights + about 0.9 GB codec + th
 Add the **S2 Pro 목소리** node, connect a text node to **읽을 글** (text to read) and press ▷. Up to 4,000 characters per run.
 
 - For several speakers, start each line with `Speaker 1: text` to `Speaker 4: text` (or `1: text`); the official `<|speaker:0|>` tags also work. Without speaker marks, speaker 1 reads everything.
-- Connect speech (10–30 s is best, up to 60 s) to **화자 N 참조 목소리** (speaker N reference voice) and its transcript to **화자 N 참조 대사** (speaker N reference transcript) to read that speaker in that voice. A reference voice without its transcript is reported as an error. Do not use a real person's voice without their consent.
+- Connect speech (10–30 s is best, up to 60 s) to **화자 N 참조 목소리** (N = 1–3) (speaker N reference voice) and its transcript to **화자 N 참조 대사** (speaker N reference transcript) to read that speaker in that voice. A reference voice without its transcript is reported as an error. Do not use a real person's voice without their consent.
 - Settings (labels inside the app are in Korean): **문맥 길이** context length (default 8,192; 4,096 / 8,192 / 16,384 / 32,768 = official), **묶음 크기** batch size in bytes (default 200, official range 100–1000), **묶음당 최대 소리 토큰** max audio tokens per batch (default 1024 ≈ 48 s, official SDK default), **다양성 (temperature)** and **후보 범위 (top_p)** (0.7 each, official SDK defaults, range 0.1–1) and **시드** seed.
 
 ### Code path
